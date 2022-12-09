@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  btnStyle = {
+    color: "#fff",
+    border: "none",
+    padding: "5px 9px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    float: "right"
+  }
+
+  getStyle = () => {
+    return {
+      padding: "10px",
+      borderBottom: "1px #ccc dotted",
+      textDecoration: "none"
+    }
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <div className="todoBlock">
+          <div className="title">
+            <h1>할 일 목록</h1>
+          </div>
+
+          <div style={this.getStyle()}>
+            <input type="checkbox" defaultChecked={false} />
+            공부하기
+            <button style={this.btnStyle}>x</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
