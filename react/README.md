@@ -64,3 +64,13 @@ $ npx create-react-app ./
 npx는 노드 패키지 실행을 도와주는 도구이다. 그래서 create-react-app이란 npm 레지스트리에 있는 패키지를 해당 폴더에서 실행해서 리액트를 설치해 준다.
 
 - npm 레지스트리(registry): 라이브러리들이 저장된 곳
+
+# SPA(Single Page Application) 이란?
+
+웹 사이트의 전체 페이지를 하나의 페이지에 담아 동적으로 화면을 바꿔가며 표현
+
+# JSX(Javascript syntax extension)
+
+JSX는 자바스크립트의 확장 문법이다. 리액트에서는 이 JSX를 이용해서 화면에서 UI가 보이는 모습을 나타내준다.<br/>
+JSX를 이용하면 UI를 나타낼 때 자바스크립트(logic)와 HTML 구조(markup)를 같이 사용할 수 있기 때문에 기본 UI에 데이터가 변하는 것들이나 이벤트들이 처리되는 부분을 더욱 쉽게 구현할 수 있다.<br/>
+자바스크립트 안에서 UI 작업을 하는데 편리하여 React를 사용할 때는 대부분 JSX를 사용한다.
