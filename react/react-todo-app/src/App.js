@@ -10,7 +10,7 @@ export default class App extends Component {
     borderRadius: "50%",
     cursor: "pointer",
     float: "right"
-  }
+  };
 
   getStyle = () => {
     return {
@@ -18,7 +18,7 @@ export default class App extends Component {
       borderBottom: "1px #ccc dotted",
       textDecoration: "none"
     }
-  }
+  };
 
   todoData = [
     {
@@ -31,7 +31,13 @@ export default class App extends Component {
       title: "청소하기",
       completed: false
     }
-  ]
+  ];
+
+  // filter(): 주어진 함수의 테스트를 통화하는 모든 요소를 모아 새로운 배열로 반환
+  handleClick = (id) => {
+    let newTodoData = this.todoData.filter(data => data.id !== id)
+    console.log("newTodoData", newTodoData)
+  }
 
   render() {
     return (
@@ -41,11 +47,11 @@ export default class App extends Component {
             <h1>할 일 목록</h1>
           </div>
 
-          {this.todoData.map((data, idx) => (
-            <div style={this.getStyle()} key={idx}>
+          {this.todoData.map((data) => (
+            <div style={this.getStyle()} key={data.id}>
               <input type="checkbox" defaultChecked={false} />
               {data.title}
-              <button style={this.btnStyle}>x</button>
+              <button style={this.btnStyle} onClick={()=>{this.handleClick(data.id)}}>x</button>
             </div>
           ))}
         </div>
