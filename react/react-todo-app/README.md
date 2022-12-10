@@ -55,7 +55,7 @@ handleClick = (id) => {
 }
 ```
 
-# 입력 버튼 클릭 시 목록에 추가
+## 입력 버튼 클릭 시 목록에 추가, 입력한 값 지우기
 
 ```javascript
 handleSubmit = (e) => {
@@ -70,6 +70,29 @@ handleSubmit = (e) => {
   }
 
   // 원래 있던 할 일에 새로운 할 일 더해주기
-  this.setState({ todoData: [...this.state.todoData, newTodo] });
+  this.setState({ todoData: [...this.state.todoData, newTodo], value: "" });
+}
+```
+
+## 완료 상태 변환 & 삼항 연산자 활용
+
+```javascript
+getStyle = (completed) => {
+  return {
+    padding: "15px",
+    borderBottom: "1px #ccc dotted",
+    textDecoration: completed ? "line-through" : "none"
+  };
+};
+
+// 체크박스 클릭 시 상태 바꾸기
+handleCompleChange = (id) => {
+  let newTodoData = this.state.todoData.map(data => {
+    if(data.id === id) {
+      data.completed = !data.completed;
+    }
+    return data;
+  })
+  this.setState({ todoData: newTodoData });
 }
 ```
