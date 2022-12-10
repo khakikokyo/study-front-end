@@ -3,6 +3,21 @@ import "./App.css";
 
 export default class App extends Component {
 
+  state = {
+    todoData: [
+      {
+        id: "1",
+        title: "공부하기",
+        completed: true
+      },
+      {
+        id: "2",
+        title: "청소하기",
+        completed: false
+      }
+    ]
+  }
+
   btnStyle = {
     color: "#fff",
     border: "none",
@@ -20,23 +35,10 @@ export default class App extends Component {
     }
   };
 
-  todoData = [
-    {
-      id: "1",
-      title: "공부하기",
-      completed: true
-    },
-    {
-      id: "2",
-      title: "청소하기",
-      completed: false
-    }
-  ];
-
-  // filter(): 주어진 함수의 테스트를 통화하는 모든 요소를 모아 새로운 배열로 반환
+  // 할 일 목록 삭제하기
   handleClick = (id) => {
-    let newTodoData = this.todoData.filter(data => data.id !== id)
-    console.log("newTodoData", newTodoData)
+    let newTodoData = this.state.todoData.filter(data => data.id !== id);
+    this.setState({todoData: newTodoData});
   }
 
   render() {
@@ -47,7 +49,7 @@ export default class App extends Component {
             <h1>할 일 목록</h1>
           </div>
 
-          {this.todoData.map((data) => (
+          {this.state.todoData.map((data) => (
             <div style={this.getStyle()} key={data.id}>
               <input type="checkbox" defaultChecked={false} />
               {data.title}
