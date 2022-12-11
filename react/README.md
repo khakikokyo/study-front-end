@@ -157,3 +157,79 @@ const arr2 = [...arr1].reverse();
 console.log(arr1); // [1, 2, 3]
 console.log(arr2); // [3, 2, 1]
 ```
+
+# React Hooks
+
+## React Hooks는 무엇인가?
+
+React Hooks는 ReactConf 2018 에서 발표된, class 없이 state를 사용할 수 있는 새로운 기능이다.
+
+## React Hooks가 필요한 이유
+
+항상 기술은 그 전의 것에 불편함이나 문제점을 해결하기 위해 발전한다.<br/>
+그와 같이 React Hooks도 주로 Class Component로 사용되어온 React에 느껴왔던 불편함이나 문제점들을 해결하기 위해서 개발되었다. 원래 React는 Class Component를 사용하고 React Hooks는 Functional Component를 사용했다.
+
+### React Component
+
+Class Component | Functional Component
+:--:|:--:
+더 많은 기능 제공 | 더 적은 기능 제공
+더 긴 코드 양 | 짧은 코드 양
+더 복잡한 코드 | 더 심플한 코드
+더딘 성능 | 더 빠른 성능
+
+```javascript
+// Class Component
+import React, { Component } from 'react';
+
+export default class Hello extends Component {
+  render() {
+    return (
+      <div>
+        Hello!
+      </div>
+    )
+  }
+}
+```
+
+```javascript
+// Functional Component
+import React from 'raact';
+
+function Hello() {
+  return (
+    <div>
+      Hello!
+    </div>
+  )
+}
+```
+
+### 리액트의 생명주기(Lifecycle)
+
+![Lifecycle](./img/lifecycle.png)
+
+1. mount(생성)
+2. update(재렌더링)
+3. unmount(삭제)
+
+생명주기를 함수형 컴포넌트에서는 사용을 하지 못했기 때문에 함수형 컴포넌트가 더 간결하고 빠르더라도 클래스형 컴포넌트를 사용했으나, **React 16.8 Hooks 업데이트**로 함수형 컴포넌트에서도 생명주기를 사용할 수 있기에 데이터를 가져오고 컴포넌트를 시작하자마자 API도 호출하는 등의 많은 부분을 할 수 있게 되었다.
+
+### 정리
+
+```javascript
+// 1. 재렌더링마다 코드를 실행
+useEffect(function() {});
+
+// 2. mount시 1회 코드를 실행
+useEffect(function() {}, []);
+
+// 3. unmount시 1회 코드를 실행
+useEffect(function() {
+  return function() {}
+});
+
+// 4. 특정 state 변경시에만 실행
+useEffect(function() {}, [state명]);
+```
