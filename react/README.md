@@ -216,7 +216,7 @@ function Hello() {
 
 생명주기를 함수형 컴포넌트에서는 사용을 하지 못했기 때문에 함수형 컴포넌트가 더 간결하고 빠르더라도 클래스형 컴포넌트를 사용했으나, **React 16.8 Hooks 업데이트**로 함수형 컴포넌트에서도 생명주기를 사용할 수 있기에 데이터를 가져오고 컴포넌트를 시작하자마자 API도 호출하는 등의 많은 부분을 할 수 있게 되었다.
 
-### 정리
+### useEffect
 
 ```javascript
 // 1. 재렌더링마다 코드를 실행
@@ -233,3 +233,5 @@ useEffect(function() {
 // 4. 특정 state 변경시에만 실행
 useEffect(function() {}, [state명]);
 ```
+
+Class Component 에서는 생명주기를 이용할 때 componentDidMount, componentDidUpdate, componentWillUnmount 이렇게 다르게 처리를 해주지만, 리액트 훅을 사용하면 useEffect 안에서 다 처리를 해줄 수 있다.
