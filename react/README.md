@@ -235,3 +235,16 @@ useEffect(function() {}, [state명]);
 ```
 
 Class Component 에서는 생명주기를 이용할 때 componentDidMount, componentDidUpdate, componentWillUnmount 이렇게 다르게 처리를 해주지만, 리액트 훅을 사용하면 useEffect 안에서 다 처리를 해줄 수 있다.
+
+## state & props
+
+### state
+
+1. 해당 컴포넌트 내부에서 데이터를 전달
+2. state는 변경 가능(mutable)
+3. state가 변하면 re-render
+
+### props (properties)
+
+1. props는 상속하는 부모 컴포넌트로부터 자녀 컴포넌트에 데이터 등을 전달하는 방법
+2. props는 읽기 전용(immutable)으로 자녀 컴포넌트 입장에서는 변하지 않는다. (변하게 하고자 하면 부모 컴포넌트에서 state를 변경시켜줘야 한다.)
