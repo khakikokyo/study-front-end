@@ -96,3 +96,67 @@ handleCompleChange = (id) => {
   this.setState({ todoData: newTodoData });
 }
 ```
+
+# Drag and Drop
+
+## Drag and Drop 기능 구현 순서
+
+1. HTML 드래그 앤 드롭 API를 사용하여 원하는 목록을 드래그 가능하게 만든다.
+2. 사용자가 드래그를 할 때 적절한 애니메이션을 준다.
+3. 사용자가 드래그를 멈췄는지 확인한다. 그리고 해당 위치에도 애니메이션을 준다.
+4. 클라이언트가 목록을 재정렬한 경우 항목의 위치를 새 항목으로 업데이트한다.
+5. 이것들을 쉽게 구현할 수 있게 도와주는 모듈이 [react-beautiful-dnd](https://www.npmjs.com/package/react-beautiful-dnd)
+
+```bash
+# 필요 모듈 설치
+$ npm install react-beautiful-dnd --save
+```
+
+```javascript
+// result 매개변수에는 source 항목 및 대상 위치와 같은 드래그 이벤트에 대한 정보가 포함
+const handleEnd = (result) => {
+  // 목적지가 없으면(이벤트 취소) 해당 함수를 종료
+  if(!result.destination) return;
+
+  // 리액트 불변성을 지키기 위해 새로운 todoData 생성
+  const newTodoData = [...todoData];
+
+  // 1. 변경시키는 아이템을 배열에서 삭제
+  // 2. return 값으로 지워진 아이템을 잡아주기
+  const [reorderedItem] = newTodoData.splice(result.source.index, 1);
+
+  // 원하는 자리에 reorderedItem을 insert
+  newTodoData.splice(result.destination.index, 0, reorderedItem);
+  setTodoData(newTodoData);
+}
+```
+
+```javascript
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+// Drag and drop을 사용하고자 하는 어플리케이션의 영역을 감싸는 Wrapper
+<DragDropContext onDragEnd={handleEnd}>
+  // Drag and drop에서 drop을 할 수 있는 영역이자, Draggable를 감싸는 Wrapper
+  <Droppable droppableId="todo">
+    {(provided) => (
+      <div {...provided.droppableProps} ref={provided.innerRef}>
+        {todoData.map((data, idx) => (
+          // Drag and Drop의 주체가 되는, Drag가 가능한 컴포넌트를 감싸는 Wrapper
+          <Draggable
+            key={data.id}
+            draggableId={data.id.toString()}
+            index={idx}
+          >
+            {(provided, snapshot) => (
+              <div>
+                [...]
+              </div>
+            )}
+          </Draggable>
+        ))}
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+</DragDropContext>
+```
