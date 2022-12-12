@@ -248,3 +248,7 @@ Class Component 에서는 생명주기를 이용할 때 componentDidMount, compo
 
 1. props는 상속하는 부모 컴포넌트로부터 자녀 컴포넌트에 데이터 등을 전달하는 방법
 2. props는 읽기 전용(immutable)으로 자녀 컴포넌트 입장에서는 변하지 않는다. (변하게 하고자 하면 부모 컴포넌트에서 state를 변경시켜줘야 한다.)
+
+# 구조 분해 할당 (Destructuring)
+
+배열이나 객체의 속성을 해체하여 그 값을 개별 변수에 담을 수 있게 하는 Javascript 표현식
