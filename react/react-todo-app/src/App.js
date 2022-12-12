@@ -1,16 +1,12 @@
 import "./App.css";
 import { useState } from "react";
 import List from "./components/List";
+import Form from "./components/Form";
 
 function App() {
 
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
-
-  // 글 입력시 state 변경
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
 
   // 입력 버튼 클릭 시 목록에 추가
   const handleSubmit = (e) => {
@@ -37,24 +33,7 @@ function App() {
         </div>
 
         <List todoData={todoData} setTodoData={setTodoData} />
-
-          <form style={{ display: "flex" }} onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="value"
-              style={{ flex: "10", padding: "5px" }}
-              placeholder="할 일을 입력하세요."
-              value={value}
-              onChange={handleChange}
-            />
-
-            <input
-              type="submit"
-              value="입력"
-              className="btn"
-              style={{ flex: "1" }}
-            />
-          </form>
+        <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
 
       </div>
     </div>
