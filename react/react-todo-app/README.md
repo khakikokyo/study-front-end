@@ -160,3 +160,43 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
   </Droppable>
 </DragDropContext>
 ```
+
+# 컴포넌트 렌더링 최적화
+
+컴포넌트가 재렌더링되면 자식 컴포넌트는 항상 함께 재렌더링 된다.<br/>
+평소에는 별 문제가 없겠으나, 자식 컴포넌트가 렌더링 시간이 오래 걸리는 무거운 컴포넌트인 경우, 자식 컴포넌트의 재렌더링을 막는 함수를 사용한다.<br/>
+사실 재렌더링을 막는다기 보다는, 특정 상황에서만 재렌더링, props가 변할 때만 재렌더링을 해준다.
+
+memo()로 감싼 컴포넌트는 불필요한 재렌더링을 막고, 기존 props와 바뀐 props를 비교하는 연산이 추가로 진행된다.<br/>
+props가 크고 복잡하면 이거 자체로도 부담이 될 수 있으니, 꼭 필요한 곳에서만 사용하도록 한다.
+
+1. memo(): 컴포넌트의 불필요한 재렌더링 막기
+
+```javascript
+import { memo } from "react";
+
+// 원하는 컴포넌트 정의 부분을 감싼다.
+let Child = memo(function( {
+  return <div>자식 컴포넌트</div>
+}));
+
+function Cart() {
+  return(
+    <Child />
+  )
+}
+```
+
+2. useMemo(): 컴포넌트 로드시 1회만 실행하고 싶은 코드가 있는 경우 (useEffect와 비슷한 용도, 실행시점의 차이가 있다.)
+
+```javascript
+import { useMemo } from "react";
+
+function 함수() {
+  reutnr 결과
+};
+
+function Cart() {
+  let result = useMemo(() => { return 함수(), [] });
+};
+```

@@ -1,4 +1,5 @@
 function Form({ handleSubmit, value, setValue }) {
+  console.log('Form Component');
 
   // 글 입력시 state 변경
   const handleChange = (e) => {
