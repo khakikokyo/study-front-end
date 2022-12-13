@@ -4,8 +4,6 @@ import { memo } from "react";
 
 const Lists = memo(({ todoData, setTodoData }) => {
 
-  console.log('Lists Component');
-
   // result 매개변수에는 source 항목 및 대상 위치와 같은 드래그 이벤트에 대한 정보가 포함
   const handleEnd = (result) => {
     // 목적지가 없으면(이벤트 취소) 해당 함수를 종료

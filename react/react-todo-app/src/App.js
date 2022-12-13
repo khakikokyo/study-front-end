@@ -4,7 +4,6 @@ import Lists from "./components/Lists";
 import Form from "./components/Form";
 
 function App() {
-  console.log('App Component');
 
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
@@ -23,7 +22,14 @@ function App() {
 
     // 원래 있던 할 일에 새로운 할 일 더해주기
     setTodoData(prev => [...prev, newTodo]);
+
+    // 입력란에 있던 글씨 지워주기
     setValue("");
+  };
+
+  // 리스트 전체 삭제
+  const handleRemoveClick = () => {
+    setTodoData([]);
   };
 
   return (
@@ -31,6 +37,7 @@ function App() {
       <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
         <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
+          <button onClick={handleRemoveClick}>Delete All</button>
         </div>
 
         <Lists todoData={todoData} setTodoData={setTodoData} />

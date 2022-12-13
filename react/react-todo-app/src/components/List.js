@@ -3,7 +3,6 @@ import { memo } from "react";
 const List = memo(({
   id, title, completed, todoData, setTodoData, provided, snapshot
 }) => {
-  console.log('List Component');
 
   // 할 일 목록 삭제하기
   const handleClick = (id) => {
