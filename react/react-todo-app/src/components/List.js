@@ -11,6 +11,7 @@ const List = memo(({
   const handleClick = (id) => {
     let newTodoData = todoData.filter(data => data.id !== id);
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   };
 
   // 체크박스 클릭 시 상태 바꾸기
@@ -22,6 +23,7 @@ const List = memo(({
       return data;
     })
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   };
 
   // editing 입력할 때 editedTitle state 변경
@@ -40,6 +42,7 @@ const List = memo(({
       return data;
     })
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
     setIsEditing(false);
   }
 

@@ -294,3 +294,21 @@ const handleSubmit = (e) => {
   setIsEditing(false);
 }
 ```
+
+# localStorage에 todoData 값 담기
+
+localStorage에 todoData 값을 담아서 페이지를 refresh 해도 todoData가 계속 남아 있도록 localStorage에 데이터를 저장하기
+
+1. localStorage에 저장
+
+```javascript
+localStorage.setItem('todoData', JSON.stringify(newTodoData));
+```
+
+2. localStorage에 저장된 todoData 활용
+
+```javascript
+const [todoData, setTodoData] = useState(initialTodoData);
+
+const initialTodoData = localStorage.getItem("todoData") ? JSON.parse(localStorage.getItem("todoData")) : [];
+```
