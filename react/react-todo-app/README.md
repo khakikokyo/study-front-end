@@ -212,3 +212,85 @@ import { useCallback } from "react";
 
 const callback = useCallback(() => {}, []);
 ```
+
+# 할 일 목록 수정 기능
+
+1. 다른 UI 제공을 위한 state 생성
+
+```javascript
+const [isEditing, setIsEditing] = useState(false);
+const [editedTitle, setEditedTitle] = useState(title);
+```
+
+2. edit 버튼 추가 & 클릭 시 isEditing state 변경
+
+```javascript
+<div className="items-center">
+  <button
+    className="px-4 py-2 float-right"
+    onClick={()=>{handleClick(id)}}
+  >
+    x
+  </button>
+  <button
+    className="px-4 py-2 float-right"
+    onClick={()=>{setIsEditing(true)}}
+  >
+    edit
+  </button>
+</div>
+```
+
+3. 조건에 따른 UI 렌더링
+
+```javascript
+if(isEditing) {
+  return (
+    <div>editing...</div>
+  )
+} else {
+  return (
+    <div>
+      [...]
+    </div>
+  )
+}
+```
+
+4. edotomg 입력할 때 editedTitle state 변경
+
+```javascript
+const handleEditChange = (e) => {
+  setEditedTitle(e.target.value);
+}
+```
+
+```javascript
+<input
+  className="cursor-pointer m-4 w-full px-3 py-2 mr-4 text-gray-500 rounded"
+  value={editedTitle}
+  onChange={handleEditChange}
+/>
+```
+
+5. editing 입력 후 save
+
+```javascript
+<form onSubmit={handleSubmit}></form>
+<button onClick={handleSubmit}>save<button>
+```
+
+```javascript
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  let newTodoData = todoData.map(data => {
+    if(data.id === id) {
+      data.title = editedTitle
+    }
+    return data;
+  })
+  setTodoData(newTodoData);
+  setIsEditing(false);
+}
+```
