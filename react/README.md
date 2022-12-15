@@ -336,3 +336,19 @@ index.css
 spread operator, map, filter, slice, reduce
 
 원본 데이터를 변경하는 메소드: splice, push
+
+# Styled Component
+
+[Styled Component](https://styled-components.com/docs/basics)란 css-in-JS라고 하는 Javascript 파일 안에서 CSS를 처리할 수 있게 해주는 대표적인 라이브러리이다.
+
+### 설치 방법
+
+```bash
+# with npm
+$ npm install --save styled-components
+```
+
+```bash
+# with yarn
+$ yarn add styled-components
+```
