@@ -365,10 +365,20 @@ React Router DOM을 사용하면 웹 앱에서 동적 라우팅을 구현할 수
     - `BrowserRouter`: HTML5를 지원하는 브라우저의 주소를 감지
     - `HashRouter`: 해시 주소(http://aaa.com/#test)를 감지
 
-## 중첩 라우팅(Nested Routes): 서브 경로 생성
-
-React Router의 가장 강력한 기능 중 하나이다. 복잡한 레이아웃 코드를 어지럽힐 필요가 없다. 대부분의 레이아웃은 URL의 세그먼트에 연결되며 React Router는 이를 완전히 수용한다.
-
 ## Single Page Application (SPA)
 
 리액트는 SPA이기 때문에 하나의 index.html 템플릿 파일을 가지고 있다. 이 하나의 템플릿에 자바스크립트를 이용해서 다른 컴포넌트를 이 index.html 템플릿에 넣으므로 페이지를 변경해 주게 된다. 이때 이 React Router Dom 라이브러리가 새 컴포넌트로 라우팅/탐색을 하고 렌더링하는데 도움을 주게 된다.
+
+## React Router Dom APIs
+
+1. 중첩 라우팅(Nested Routes): 서브 경로 생성, React Router의 가장 강력한 기능 중 하나이다. 복잡한 레이아웃 코드를 어지럽힐 필요가 없다. 대부분의 레이아웃은 URL의 세그먼트에 연결되며 React Router는 이를 완전히 수용한다.
+
+2. Outlet: 자식 경로 요소를 렌더링 하려면 부모 경로 요소에서 <Outlet>을 사용해야 한다. 이렇게 하면 하위 경로가 렌더링될 때 중첩된 UI가 표시될 수 있다. 부모 라우트가 정확히 일치하면 자식 인덱스 라우트를 렌더링하거나 인덱스 라우트가 없으면 아무것도 렌더링하지 않는다.
+
+3. use Navigate: 경로를 바꿔준다. navigate('/home') => localhost:3000/home으로 이동
+
+4. useParams: :style 문법을 path 경로에 사용하였다면 useParams()로 읽을 수 있다.
+
+5. useLocation: 해당 Hooks는 현재 위치 객체를 반환한다. 현재 위치가 변경될 때마다 일부 side effect를 수행하려는 경우에 유용할 수 있다.
+
+6. useRoutes: useRoutes Hooks는 Routes와 기능적으로 동일하지면 Route 요소 대신 Javascript 객체를 사용하여 경로를 정의한다. 이러한 객체는 일반 Route 요소와 동일한 속성을 갖지만 JSX가 필요하지 않다.
