@@ -365,6 +365,10 @@ React Router DOM을 사용하면 웹 앱에서 동적 라우팅을 구현할 수
     - `BrowserRouter`: HTML5를 지원하는 브라우저의 주소를 감지
     - `HashRouter`: 해시 주소(http://aaa.com/#test)를 감지
 
+## 중첩 라우팅(Nested Routes): 서브 경로 생성
+
+React Router의 가장 강력한 기능 중 하나이다. 복잡한 레이아웃 코드를 어지럽힐 필요가 없다. 대부분의 레이아웃은 URL의 세그먼트에 연결되며 React Router는 이를 완전히 수용한다.
+
 ## Single Page Application (SPA)
 
 리액트는 SPA이기 때문에 하나의 index.html 템플릿 파일을 가지고 있다. 이 하나의 템플릿에 자바스크립트를 이용해서 다른 컴포넌트를 이 index.html 템플릿에 넣으므로 페이지를 변경해 주게 된다. 이때 이 React Router Dom 라이브러리가 새 컴포넌트로 라우팅/탐색을 하고 렌더링하는데 도움을 주게 된다.
