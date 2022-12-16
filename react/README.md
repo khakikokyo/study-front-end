@@ -352,3 +352,19 @@ $ npm install --save styled-components
 # with yarn
 $ yarn add styled-components
 ```
+
+# React Router Dom
+
+React Router DOM을 사용하면 웹 앱에서 동적 라우팅을 구현할 수 있다. 라우팅이 실행중인 앱 외부의 구성에서 처리되는 기존 라우팅 아키텍처와 달리 React Router DOM은 앱 및 플랫폼의 요구사항에 따라 컴포넌트 기반 라우팅을 용이하게 한다.
+
+1. 라우팅: 사용자가 요청한 URL에 따라 해당 URL에 맞는 페이지를 보여주는 것
+2. 리액트 라우터(React Router)
+    - 사용자가 입력한 주소를 감지하는 역할을 하며, 여러 환경에서 동작할 수 있도록 여러 종류의 라우터 컴포넌트를 제공
+    - 이중 가장 많이 사용하는 라우터 컴포넌트는 `BrowserRouter`와 `HashRouter`이다.
+3. 종류
+    - `BrowserRouter`: HTML5를 지원하는 브라우저의 주소를 감지
+    - `HashRouter`: 해시 주소(http://aaa.com/#test)를 감지
+
+## Single Page Application (SPA)
+
+리액트는 SPA이기 때문에 하나의 index.html 템플릿 파일을 가지고 있다. 이 하나의 템플릿에 자바스크립트를 이용해서 다른 컴포넌트를 이 index.html 템플릿에 넣으므로 페이지를 변경해 주게 된다. 이때 이 React Router Dom 라이브러리가 새 컴포넌트로 라우팅/탐색을 하고 렌더링하는데 도움을 주게 된다.
