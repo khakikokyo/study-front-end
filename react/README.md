@@ -382,3 +382,17 @@ React Router DOM을 사용하면 웹 앱에서 동적 라우팅을 구현할 수
 5. useLocation: 해당 Hooks는 현재 위치 객체를 반환한다. 현재 위치가 변경될 때마다 일부 side effect를 수행하려는 경우에 유용할 수 있다.
 
 6. useRoutes: useRoutes Hooks는 Routes와 기능적으로 동일하지면 Route 요소 대신 Javascript 객체를 사용하여 경로를 정의한다. 이러한 객체는 일반 Route 요소와 동일한 속성을 갖지만 JSX가 필요하지 않다.
+
+## useDebounce Custom Hooks
+### Debounce
+
+검색 입력을 할 때 결과가 나타날 때까지 시간이 걸리는 것을 debounce라는 함수에 의해서 제어를 할 수 있다. Debounce Function은 사용자가 설정한 시간 동안 타이핑을 멈출 때까지 keyup 이벤트 처리를 지연시킨다.
+
+- Debounce의 장점
+
+    1. UI 코드가 모든 이벤트를 처리할 필요가 없다.
+    2. 서버로 전송되는 API 호출이 크게 줄어든다.
+    3. 입력된 모든 문자를 처리하면 성능이 저하되는 것을 막을 수 있다.
+    4. 백엔드에 불필요한 로드를 추가하지 않는다.
+
+Input 창에 글씨를 쓸 때 onChange로 값을 받을 때 debounce를 사용하지 않으면 글자 하나하나가 변할 때마다 값을 바꾸지만 debounce를 사용하면 결과값만 얻을 수 있다.
