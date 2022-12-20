@@ -31,6 +31,55 @@ $ node -v
 1. 검색 엔진에서 [visual studio code](https://code.visualstudio.com/) 검색
 2. 다운로드
 
+# GitHub Pages 배포
+
+```bash
+$ npm i gh-pages --save -dev
+```
+
+1. 홈페이지 url 작성
+
+    https://{깃허브 유저 이름}.github.io{저장소 이름}/
+
+```javascript
+// package.json
+{
+  "name": "react-netfilx",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://khakikokyo.github.io/react-netflix", // 추가
+  [...]
+}
+```
+
+2. 배포를 위한 script 추가
+
+```javascript
+// package.json
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "predeploy": "npm run build", // 추가
+  "deploy": "gh-pages -d build", // 추가
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
+```
+
+3. react router dom 기본 경로 변경
+
+  기본 경로: https://~~~/react-netflix (basename)
+
+```javascript
+// index.js
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter basename="react-netflix">
+    <App />
+  </BrowserRouter>
+);
+```
+
 # 리액트 앱 설치 방법
 
 ### 웹팩이란?
