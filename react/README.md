@@ -512,5 +512,6 @@ $ npx create-next-app@latest
 ```
 
 ```bash
-$ npx create-next-app@latest --typescript
+# ./ 현재 폴더 인에 설치
+$ npx create-next-app@latest --typescript ./
 ```
