@@ -18,3 +18,26 @@ $ npx create-next-app@latest
 # ./ 현재 폴더 인에 설치
 $ npx create-next-app@latest --typescript ./
 ```
+
+### NextJS 기본 파일 구조
+
+1. pages
+
+    - 해당 폴더 안에 페이지들을 생성
+    - index.tsx가 처음 "/" 페이지
+    - _app.tsx는 공통되는 레이아웃을 작성한다. 모든 페이지에 공통으로 들어가는걸 넣어주려면 여기에 넣어주면 된다. (url을 통해 특정 페이지에 진입하기 전 통과하는 인터셉터 페이지이다.)
+    - 만약 about이라는 페이지를 만들려면 pages 폴더 안에 about.tsx를 생성해 주면 된다.
+
+2. public
+
+    - 이미지 같은 정적(static) 에셋들을 보관
+
+3. styles
+
+    - 스타일링을 처리해 주는 폴더
+    - 모듈(module) css는 컴포넌트 종속적으로 스타일링하기 위한 것이며, 확장자 앞에 module을 붙여줘야 한다.
+
+4. next.config.js
+
+    - Nextjs는 웹팩을 기본 번들러로 사용한다.
+    - 웹팩에 관한 설정들을 해당 파일에서 해줄 수 있다.
