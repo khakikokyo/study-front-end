@@ -41,3 +41,7 @@ $ npx create-next-app@latest --typescript ./
 
     - Nextjs는 웹팩을 기본 번들러로 사용한다.
     - 웹팩에 관한 설정들을 해당 파일에서 해줄 수 있다.
+
+### Pre-rendering
+
+NextJS는 모든 페이지를 pre-render 한다. 이 pre-render 한다는 의미는 모든 페이지를 위한 HTML을 Client 사이드에서 자바스크립트로 처리하기 전, "사전에" 생성한다는 것이다. 이렇게 하기 때문에 SEO 검색엔진 최적화가 좋아진다.
