@@ -32,11 +32,20 @@
       </div>
     </nav>
 
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Todo App</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-      </div>
+    <h4 class="container mt-4"><strong>글 작성 페이지</strong></h4>
+
+    <div class="container mt-3">
+      <form action="/add" method="POST">
+        <div class="form-group">
+          <label>오늘의 할 일</label>
+          <input type="text" class="form-control" name="title" />
+        </div>
+        <div class="form-group">
+          <label>날짜</label>
+          <input type="text" class="form-control" name="date" />
+        </div>
+        <button type="submit" class="btn btn-outline-secondary">Submit</button>
+      </form>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
