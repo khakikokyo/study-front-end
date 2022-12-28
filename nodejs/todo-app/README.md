@@ -149,6 +149,8 @@ const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb+srv://admin:phy1206@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
 
 MongoClient.connect(url, function(error, client) {
+  // 연결되면 할 일
+  if(error) {return console.log(error)} // 에러처리
   app.listen(8080, function() {
     console.log("listening on 8080");
   });
