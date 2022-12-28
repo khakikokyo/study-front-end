@@ -23,32 +23,3 @@ $ yarn add global nodemon
 # 실행
 $ nodemon server.js
 ```
-
-## GET 요청
-
-```javascript
-// server.js
-// express 라이브러리 첨부와 사용
-const express = require('express');
-const app = express();
-
-// 원하는 포트에 서버를 오픈
-app.listen(8080, function() {
-  console.log('listening on 8080');
-});
-
-app.get('/pet', function(요청, 응답) {
-  응답.send('펫용품 페이지');
-});
-```
-
-### GET 요청시 HTML 파일 보내기
-
-```javascript
-// server.js
-// 1. sendFile() 함수: 파일
-// 2. __dirname: 현재 파일의 경로
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/index.html');
-});
-```
