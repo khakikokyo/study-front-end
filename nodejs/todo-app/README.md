@@ -130,7 +130,7 @@ app.post('/add', function(request, response) {
 2. 회원가입 & 티어선택 & 서버위치 선택
 3. Database Access 메뉴에서 DB 접속용 아이디/비번 생성 (Built-in Role > Atlas admin 설정)
 4. Network Access 메뉴에서 IP 추가 (데이터베이스에 접속할 수 있는 IP를 미리 정의해 놓는 일종의 보안장치, Allow access from anywhere > 0.0.0.0/0)
-5. Database / collection 만들기 (Databases > Collections > Add My Own Data > Database name/Collection name 설정)
+5. Database / collection 만들기 (Databases > Collections > Add My Own Data > Database name/Collection name 설정) -> 데이터베이스
 
 ## 만든 Database 접속(Connect) 하는 방법
 
@@ -154,5 +154,34 @@ MongoClient.connect(url, function(error, client) {
   app.listen(8080, function() {
     console.log("listening on 8080");
   });
+});
+```
+
+## 데이터 저장
+
+```javascript
+// server.js
+let db;
+
+MongoClient.connect(url, function(error, client) {
+  [...]
+
+  // todoapp database(폴더)에 연결
+  db = client.db('todoapp');
+
+  // 데이터 저장1
+  db.collection('post').insertOne({이름: 'John', _id: 100}, function(error, result) {
+    console.log('저장완료');
+  });
+
+  // '/add'로 POST 요청시 DB에 저장
+  app.post('/add', function(request, response) {
+    response.send('전송완료');
+    db.collection('post').insertOne({제목: request.body.title, 날짜: request.body.date}, function(error, result) {
+      console.log('저장완료');
+    });
+  });
+
+  [...]
 });
 ```
