@@ -185,3 +185,36 @@ MongoClient.connect(url, function(error, client) {
   [...]
 });
 ```
+
+## EJS 템플릿 엔진
+
+서버 데이터를 HTML에서 쉽게 사용할 수 있도록 도와주는 일종의 HTML 렌더링 엔진이다.
+
+```bash
+$ npm i ejs
+```
+
+```javascript
+// server.js
+app.set('view engine', 'ejs');
+```
+
+- list.html > list.ejs (html == ejs)
+- ejs 파일들은 views 폴더 안에 생성해야 한다.
+
+```javascript
+// server.js
+app.get('/list', function(request, response) {
+  // DB에 저장된 post collection의 모든 데이터 꺼내기
+  db.collection('post').find().toArray(function(error, result) {
+    console.log(result);
+    response.render('list.ejs', {posts: result});
+  });
+});
+
+// views/list.ejs
+<% for (let i = 0; i < posts.length; i++) { %>
+  <h4>할 일 제목 : <%= posts[i].제목 %></h4>
+  <p>할 일 마감 날짜 : <%= posts[i].날짜 %></p>
+<% } %>
+```
