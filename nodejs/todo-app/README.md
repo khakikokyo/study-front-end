@@ -67,6 +67,7 @@ Application Programming Interface
 // express 라이브러리 첨부와 사용
 const express = require('express');
 const app = express();
+app.use(express.urlencoded({extended: true}));
 
 // 원하는 포트에 서버를 오픈
 app.listen(8080, function() {
@@ -105,9 +106,7 @@ app.get('/', function(request, response) {
 ```javascript
 // server.js
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.urlencoded({extended: true}));
 ```
 
 ```javascript
@@ -123,4 +122,35 @@ app.post('/add', function(request, response) {
 // 서버에서 input을 구분하기 위해 'name="이름"' 기재
 <input type="text" class="form-control" name="title" />
 <input type="text" class="form-control" name="date" />
+```
+
+# MongoDB Atlas 가입/초기셋팅
+
+1. [Mongodb atlas](https://www.mongodb.com/try/download/community) 구글 검색
+2. 회원가입 & 티어선택 & 서버위치 선택
+3. Database Access 메뉴에서 DB 접속용 아이디/비번 생성 (Built-in Role > Atlas admin 설정)
+4. Network Access 메뉴에서 IP 추가 (데이터베이스에 접속할 수 있는 IP를 미리 정의해 놓는 일종의 보안장치, Allow access from anywhere > 0.0.0.0/0)
+5. Database / collection 만들기 (Databases > Collections > Add My Own Data > Database name/Collection name 설정)
+
+## 만든 Database 접속(Connect) 하는 방법
+
+Database > Connect > Connect your application > url 주소
+
+## 연결하기
+
+```bash
+# mongoDB 라이브러리 설치
+$ npm i mongodb
+```
+
+```javascript
+// server.js
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb+srv://admin:phy1206@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
+
+MongoClient.connect(url, function(error, client) {
+  app.listen(8080, function() {
+    console.log("listening on 8080");
+  });
+});
 ```

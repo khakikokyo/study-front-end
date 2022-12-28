@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.urlencoded({extended: true}));
 
-app.listen(8080, function() {
-  console.log("listening on 8080");
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb+srv://admin:phy1206@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
+
+MongoClient.connect(url, function(error, client) {
+  app.listen(8080, function() {
+    console.log("listening on 8080");
+  });
 });
 
 app.get('/pet', function(request, response) {
