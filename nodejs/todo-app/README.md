@@ -218,3 +218,32 @@ app.get('/list', function(request, response) {
   <p>할 일 마감 날짜 : <%= posts[i].날짜 %></p>
 <% } %>
 ```
+
+## 게시물에 번호달기
+
+다른 DB에선 _id를 자동으로 1 증가시키는 Auto Increment 기능이 있는데 MongoDB는 Auto Increment 기능이 없다. 그래서 직접 지금까지 몇 번 게시물을 발행했는지를 따로 기록해 두고 사용해야 한다.
+
+- MongoDB atlas 홈페이지 대시보드에서 collection 추가 생성<br/>
+counter collection 생성 > 데이터 추가 (totalPost: 0, name: "게시물갯수")
+
+- operator: $set(변경), $inc(증가), $min(기존값보다 적을때만 변경), $rename(key값 이름변경) ...
+
+```javascript
+// server.js
+app.post('/add', function(request, response) {
+  response.send('전송완료');
+  // findOne(): collection 내에서 내가 원하는 문서를 쉽게 찾을 수 있도록 도와주는 함수, 찾은 결과는 function 내의 result라는 이름의 변수에 담긴다.
+  db.collection('counter').findOne({name: '게시물갯수'}, function(error, result) {
+    let totalNum = result.totalPost;
+
+    db.collection('post').insertOne({_id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date}, function(error, result) {
+      console.log('저장완료');
+      // counter collection의 totalPost 1 증가 (updateOne(1개의 DB 데이터 수정))
+      // {$set: {totalPost: 바꿀값}}
+      db.collection('counter').updateOne({name: '게시물갯수'}, {$inc: {totalPost:1}}, function(error, result) {
+        if(error) {return console.log(error)}
+      });
+    });
+  });
+});
+```

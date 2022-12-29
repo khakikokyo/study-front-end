@@ -37,8 +37,16 @@ app.get('/write', function(request, response) {
 // '/add'로 POST 요청시 DB에 데이터 저장
 app.post('/add', function(request, response) {
   response.send('전송완료');
-  db.collection('post').insertOne({제목: request.body.title, 날짜: request.body.date}, function(error, result) {
-    console.log('저장완료');
+  db.collection('counter').findOne({name: '게시물갯수'}, function(error, result) {
+    let totalNum = result.totalPost;
+
+    db.collection('post').insertOne({_id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date}, function(error, result) {
+      console.log('저장완료');
+      // counter collection의 totalPost 1 증가 (updateOne(1개의 DB 데이터 수정))
+      db.collection('counter').updateOne({name: '게시물갯수'}, {$inc: {totalPost:1}}, function(error, result) {
+        if(error) {return console.log(error)}
+      });
+    });
   });
 });
 
