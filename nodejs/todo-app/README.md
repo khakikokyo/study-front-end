@@ -247,3 +247,40 @@ app.post('/add', function(request, response) {
   });
 });
 ```
+
+## AJAX - 삭제하기
+
+```javascript
+// server.js
+app.delete('/delete', function(request, response) {
+  // _id: '1' > _id: 1, int로 변환
+  request.body._id = parseInt(request.body._id);
+  db.collection('post').deleteOne(request.body, function(error, result) {
+    console.log('삭제완료');
+    response.status(200).send({message: '성공했습니다.'});
+  });
+});
+```
+
+```javascript
+// list.ejs
+// AJAX 기본 문법 (jquery)
+<script>
+  $('.delete').click(function(e) {
+    let postNum = e.target.dataset.id; // 지금 클릭한 것
+    let postTarget = $(this); // 지금 이벤트 동작하는 곳
+    
+    $.ajax({
+    method: 'DELETE',
+    url: '/delete',
+    data: {_id: postNum}
+    }).done(function(result) {
+      // 요청 성공시 실행
+      postTarget.parent('li').fadeOut();
+    }).fail(function(xhr, textStatus, errorThrown) {
+      // 요청 실패시 실행
+      console.log(xhr, textStatus, errorThrown);
+    });
+  });
+</script>
+```

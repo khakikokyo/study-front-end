@@ -26,10 +26,12 @@ MongoClient.connect(url, function(error, client) {
   });
 });
 
+// 메인 화면
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/index.html');
 });
 
+// 글작성 화면
 app.get('/write', function(request, response) {
   response.sendFile(__dirname + '/write.html');
 });
@@ -50,10 +52,19 @@ app.post('/add', function(request, response) {
   });
 });
 
+// 글목록 화면
 app.get('/list', function(request, response) {
   // DB에 저장된 post collection의 모든 데이터 꺼내기
   db.collection('post').find().toArray(function(error, result) {
-    console.log(result);
     response.render('list.ejs', {posts: result});
+  });
+});
+
+// 삭제
+app.delete('/delete', function(request, response) {
+  request.body._id = parseInt(request.body._id);
+  db.collection('post').deleteOne(request.body, function(error, result) {
+    console.log('삭제완료');
+    response.status(200).send({message: '성공했습니다.'});
   });
 });
