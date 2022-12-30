@@ -68,3 +68,11 @@ app.delete('/delete', function(request, response) {
     response.status(200).send({message: '성공했습니다.'});
   });
 });
+
+// 상세 페이지 화면
+// 파라미터: URL 뒤에 무작위의 문자를 붙일 수 있게 만들어 주는 URL 작명 방식
+app.get('/detail/:id', function(request, response) {
+  db.collection('post').findOne({_id: parseInt(request.params.id)}, function(error, result) {
+    response.render('detail.ejs', { data: result });
+  });
+});

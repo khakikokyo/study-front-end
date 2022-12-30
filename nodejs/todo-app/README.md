@@ -284,3 +284,23 @@ app.delete('/delete', function(request, response) {
   });
 </script>
 ```
+
+## 상세 페이지
+
+```javascript
+// server.js
+// 파라미터: URL 뒤에 무작위의 문자를 붙일 수 있게 만들어 주는 URL 작명 방식 (/detail/:id)
+app.get('/detail/:id', function(request, response) {
+  // parseInt(request.params.id): URL에 입력한 id 값을 숫자로 변환
+  db.collection('post').findOne({_id: parseInt(request.params.id)}, function(error, result) {
+    response.render('detail.ejs', { data: result });
+  });
+});
+```
+
+```javascript
+// list.ejs
+<a href="/detail/<%=posts[i]._id%>" class="list-group-item">
+  [...]
+</a>
+```
