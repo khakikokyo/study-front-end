@@ -5,6 +5,9 @@ app.use(express.urlencoded({extended: true}));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
+// static 파일을 보관하기 위해 public 폴더 사용
+app.use('/public', express.static('public'));
+
 // MongoDB
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb+srv://admin:phy1206@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
@@ -28,12 +31,12 @@ MongoClient.connect(url, function(error, client) {
 
 // 메인 화면
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/index.html');
+  response.render('index.ejs');
 });
 
 // 글작성 화면
 app.get('/write', function(request, response) {
-  response.sendFile(__dirname + '/write.html');
+  response.render('write.ejs');
 });
 
 // '/add'로 POST 요청시 DB에 데이터 저장

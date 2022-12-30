@@ -304,3 +304,34 @@ app.get('/detail/:id', function(request, response) {
   [...]
 </a>
 ```
+
+## CSS & NavBar
+
+1. CSS
+
+```javascript
+// server.js
+// static 파일을 보관하기 위해 public 폴더 사용 (public > main.css)
+app.use('/public', express.static('public'));
+```
+
+2. NavBar
+
+```javascript
+// 1. nav.html 생성 (views > nav.html)
+// 2. navbar를 필요로 하는 파일(ejs)에 nav.html 적용
+<%- include('nav.html') %>
+
+// 3. html 파일(index.html, write.html) ejs 파일로 변경
+// server.js
+app.get('/', function(request, response) {
+  // response.render(__dirname + '/index.html');
+  response.render('index.ejs');
+});
+
+// 글작성 화면
+app.get('/write', function(request, response) {
+  // response.sendFile(__dirname + '/write.ejs');
+  response.render('write.ejs');
+});
+```
