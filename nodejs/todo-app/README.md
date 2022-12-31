@@ -358,7 +358,7 @@ app.use(methodOverride('_method'));
 </form>
 ```
 
-3. 
+3. 수정 기능 구현
 
 ```javascript
 // server.js
