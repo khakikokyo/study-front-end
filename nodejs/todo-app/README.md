@@ -378,3 +378,11 @@ app.put('/edit', function(request, response) {
   });
 });
 ```
+
+## 회원 인증 방법
+
+1. Session-based Authentication
+
+    사용자의 세션 정보를 저장해서 로그인 기능을 구현하는 방법
+    - 로그인 했었다는 정보를 서버의 메모리에다가 기록 (세션 저장)
+    - 고객이 로그인이 필요한 페이지(MyPage)를 요청하면 세션을 확인해서 로그인 정보가 나오면 OK
