@@ -15,6 +15,10 @@ const url = "mongodb+srv://admin:phy1206@cluster0.ksfxvce.mongodb.net/?retryWrit
 // EJS 템플릿 엔진
 app.set('view engine', 'ejs');
 
+// 수정(PUT)
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 let db;
 
 MongoClient.connect(url, function(error, client) {
@@ -77,5 +81,20 @@ app.delete('/delete', function(request, response) {
 app.get('/detail/:id', function(request, response) {
   db.collection('post').findOne({_id: parseInt(request.params.id)}, function(error, result) {
     response.render('detail.ejs', { data: result });
+  });
+});
+
+// 수정 페이지
+app.get('/edit/:id', function(request, response) {
+  db.collection('post').findOne({_id: parseInt(request.params.id)}, function(error, result) {
+    response.render('edit.ejs', { post: result });
+  })
+});
+
+// 수정
+app.put('/edit', function(request, response) {
+  db.collection('post').updateOne({_id: parseInt(request.body.id)}, {$set: {제목: request.body.title, 날짜: request.body.date}}, function(error, result) {
+    console.log('수정완료');
+    response.redirect('/list');
   });
 });

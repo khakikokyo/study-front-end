@@ -335,3 +335,46 @@ app.get('/write', function(request, response) {
   response.render('write.ejs');
 });
 ```
+
+## 수정(PUT)
+
+1. PUT 요청을 하기 위해 DELETE 요청 방식처럼 AJAX를 사용하던가, method-override 라이브러리를 설치하여 form 태그에 method 사용
+
+```bash
+$ npm i method-override
+```
+
+2. 설치 후 method-override 라이브러리 사용 방법
+
+```javascript
+// server.js
+// form 태그에서 method로 PUT or DELETE 요청
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+// edit.ejs
+<form action="/edit?_method=PUT" method="POST">
+  [...]
+</form>
+```
+
+3. 
+
+```javascript
+// server.js
+// 수정 페이지
+app.get('/edit/:id', function(request, response) {
+  db.collection('post').findOne({_id: parseInt(request.params.id)}, function(error, result) {
+    response.render('edit.ejs', { post: result });
+  })
+});
+
+// 수정
+// request.body.id(=title, =date): edit.ejs 파일에서 name
+app.put('/edit', function(request, response) {
+  db.collection('post').updateOne({_id: parseInt(request.body.id)}, {$set: {제목: request.body.title, 날짜: request.body.date}}, function(error, result) {
+    console.log('수정완료');
+    response.redirect('/list');
+  });
+});
+```
