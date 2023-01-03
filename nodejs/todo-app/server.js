@@ -120,6 +120,19 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/fail' }),
   response.redirect('/');
 });
 
+// 마이페이지
+app.get('/mypage', 로그인했니, function(request, response) {
+  response.render('mypage.ejs');
+});
+
+function 로그인했니(request, response, next) {
+  if(request.user) {
+    next()
+  } else {
+    response.send('로그인을 해주세요.');
+  }
+};
+
 // 로그인 인증 세부코드 (세부사항 정의)
 // done(서버에러, 성공시사용자DB데이터, 에러메세지): 라이브러리 문법, 3개의 파라미터를 가진다.
 passport.use(new LocalStrategy({

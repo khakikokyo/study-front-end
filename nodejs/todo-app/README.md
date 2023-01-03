@@ -484,3 +484,22 @@ passport.deserializeUser(function(아이디, done) {
   done(null, {})
 });
 ```
+
+4. 마이페이지
+
+```javascript
+// server.js
+// 마이페이지 라우팅
+app.get('/mypage', 로그인했니, function(request, response) {
+  response.render('mypage.ejs');
+});
+
+// 마이페이지 접속 전 실행할 미들웨어
+function 로그인했니(request, response, next) {
+  if(request.user) {
+    next()
+  } else {
+    response.send('로그인을 해주세요.');
+  }
+};
+```
