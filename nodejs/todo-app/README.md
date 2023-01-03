@@ -536,3 +536,26 @@ function 로그인했니(request, response, next) {
   }
 };
 ```
+
+## 검색
+
+```javascript
+// list.ejs
+// query string 자료는 '/search' request.query에 담겨있음
+<script>
+  // Query string 작성해서 GET 요청
+  $('#search').click(function() {
+    let 입력한값 = $('#search-input').val();
+    window.location.replace('/search?value=' + 입력한값);
+  });
+</script>
+```
+
+Database 게시물 찾는 방법
+
+- Binary Search
+
+    MongoDB indexing 하기
+    
+    원하는 Collection 안에서 Indexes > CREATE INDEX > {"<제목>": "text"} <br/>
+    { 인덱스만들항목이름: 'type' }: type에 글자인 경우 'text', 숫자인 경우 1 또는 -1 기입

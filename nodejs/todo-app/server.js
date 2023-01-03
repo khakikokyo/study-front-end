@@ -169,3 +169,12 @@ passport.deserializeUser(function(아이디, done) {
     done(null, result)
   });
 });
+
+// 검색
+app.get('/search', (request, response) => {
+  console.log(request.query.value);
+  db.collection('post').find({제목:request.query.value}).toArray((error, result) => {
+    console.log(result);
+    response.render('search.ejs', {posts: result});
+  });
+});
