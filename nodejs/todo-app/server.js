@@ -181,7 +181,7 @@ app.get('/search', (request, response) => {
           path: "제목" // 제목, 날짜 둘 다 검색하고 싶으면 ["제목", "날짜"]
         }
       }
-    }
+    },
   ];
   db.collection('post').aggregate(검색조건).toArray((error, result) => {
     console.log(result);
