@@ -43,22 +43,6 @@ app.get('/write', function(request, response) {
   response.render('write.ejs');
 });
 
-// '/add'로 POST 요청시 DB에 데이터 저장
-app.post('/add', function(request, response) {
-  response.send('전송완료');
-  db.collection('counter').findOne({name: '게시물갯수'}, function(error, result) {
-    let totalNum = result.totalPost;
-
-    db.collection('post').insertOne({_id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date}, function(error, result) {
-      console.log('저장완료');
-      // counter collection의 totalPost 1 증가 (updateOne(1개의 DB 데이터 수정))
-      db.collection('counter').updateOne({name: '게시물갯수'}, {$inc: {totalPost:1}}, function(error, result) {
-        if(error) {return console.log(error)}
-      });
-    });
-  });
-});
-
 // 글목록 화면
 app.get('/list', function(request, response) {
   // DB에 저장된 post collection의 모든 데이터 꺼내기
@@ -71,7 +55,6 @@ app.get('/list', function(request, response) {
 app.delete('/delete', function(request, response) {
   request.body._id = parseInt(request.body._id);
   db.collection('post').deleteOne(request.body, function(error, result) {
-    console.log('삭제완료');
     response.status(200).send({message: '성공했습니다.'});
   });
 });
@@ -174,6 +157,22 @@ passport.deserializeUser(function(아이디, done) {
 app.post('/register', function(request, response) {
   db.collection('login').insertOne({ id: request.body.id, pw: request.body.pw }, function(error, result) {
     response.redirect('/');
+  });
+});
+
+// '/add'로 POST 요청시 DB에 데이터 저장
+app.post('/add', function(request, response) {
+  response.send('전송완료');
+  db.collection('counter').findOne({name: '게시물갯수'}, function(error, result) {
+    let totalNum = result.totalPost;
+    let 저장할거 = { _id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date, 작성자: request.user._id }
+
+    db.collection('post').insertOne(저장할거, function(error, result) {
+      // counter collection의 totalPost 1 증가 (updateOne(1개의 DB 데이터 수정))
+      db.collection('counter').updateOne({name: '게시물갯수'}, {$inc: {totalPost:1}}, function(error, result) {
+        if(error) {return console.log(error)}
+      });
+    });
   });
 });
 

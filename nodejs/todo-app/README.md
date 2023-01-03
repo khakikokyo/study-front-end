@@ -263,8 +263,9 @@ app.post('/add', function(request, response) {
   // findOne(): collection 내에서 내가 원하는 문서를 쉽게 찾을 수 있도록 도와주는 함수, 찾은 결과는 function 내의 result라는 이름의 변수에 담긴다.
   db.collection('counter').findOne({name: '게시물갯수'}, function(error, result) {
     let totalNum = result.totalPost;
+    let 저장할거 = { _id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date, 작성자: request.user._id }
 
-    db.collection('post').insertOne({_id: totalNum + 1, 제목: request.body.title, 날짜: request.body.date}, function(error, result) {
+    db.collection('post').insertOne(저장할거, function(error, result) {
       console.log('저장완료');
       // counter collection의 totalPost 1 증가 (updateOne(1개의 DB 데이터 수정))
       // {$set: {totalPost: 바꿀값}}
