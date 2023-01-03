@@ -284,8 +284,10 @@ app.post('/add', function(request, response) {
 app.delete('/delete', function(request, response) {
   // _id: '1' > _id: 1, int로 변환
   request.body._id = parseInt(request.body._id);
-  db.collection('post').deleteOne(request.body, function(error, result) {
-    console.log('삭제완료');
+
+  let 삭제할데이터 = { _id: request.body._id, 작성자: request.user._id };
+
+  db.collection('post').deleteOne(삭제할데이터, function(error, result) {
     response.status(200).send({message: '성공했습니다.'});
   });
 });

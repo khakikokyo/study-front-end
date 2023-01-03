@@ -51,14 +51,6 @@ app.get('/list', function(request, response) {
   });
 });
 
-// 삭제
-app.delete('/delete', function(request, response) {
-  request.body._id = parseInt(request.body._id);
-  db.collection('post').deleteOne(request.body, function(error, result) {
-    response.status(200).send({message: '성공했습니다.'});
-  });
-});
-
 // 상세 페이지 화면
 // 파라미터: URL 뒤에 무작위의 문자를 붙일 수 있게 만들어 주는 URL 작명 방식
 app.get('/detail/:id', function(request, response) {
@@ -173,6 +165,18 @@ app.post('/add', function(request, response) {
         if(error) {return console.log(error)}
       });
     });
+  });
+});
+
+// 삭제
+app.delete('/delete', function(request, response) {
+  request.body._id = parseInt(request.body._id);
+
+  let 삭제할데이터 = { _id: request.body._id, 작성자: request.user._id };
+
+  db.collection('post').deleteOne(삭제할데이터, function(error, result) {
+    if(result) { console.log(result) };
+    response.status(200).send({message: '성공했습니다.'});
   });
 });
 
