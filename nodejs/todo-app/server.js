@@ -170,6 +170,13 @@ passport.deserializeUser(function(아이디, done) {
   });
 });
 
+// 회원가입, id/pw DB 저장
+app.post('/register', function(request, response) {
+  db.collection('login').insertOne({ id: request.body.id, pw: request.body.pw }, function(error, result) {
+    response.redirect('/');
+  });
+});
+
 // 검색
 app.get('/search', (request, response) => {
   let 검색조건 = [

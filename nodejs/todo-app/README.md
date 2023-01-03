@@ -551,7 +551,7 @@ function 로그인했니(request, response, next) {
 </script>
 ```
 
-Database 게시물 찾는 방법
+## Database 게시물 찾는 방법
 
 - Binary Search
 
@@ -602,6 +602,18 @@ app.get('/search', (request, response) => {
   db.collection('post').aggregate(검색조건).toArray((error, result) => {
     console.log(result);
     response.render('search.ejs', {posts: result});
+  });
+});
+```
+
+## 회원가입
+
+```javascript
+// server.js
+// 회원가입, id/pw DB 저장
+app.post('/register', function(request, response) {
+  db.collection('login').insertOne({ id: request.body.id, pw: request.body.pw }, function(error, result) {
+    response.redirect('/');
   });
 });
 ```
