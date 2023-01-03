@@ -108,3 +108,47 @@ const session = require('express-session');
 app.use(session({secret: '비밀코드', resave: true, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// 로그인 페이지 라우팅
+app.get('/login', function(request, response) {
+  response.render('login.ejs');
+});
+
+// passport.authenticate(): passport 라이브러리가 제공하는 '아이디/비번 인증을 도와주는 코드', 응답 전에 local 방식으로 아이디/비번을 인증하라는 뜻으로 해석
+// failureRedirect: 로그인 인증 실패시 이동시켜줄 경로
+app.post('/login', passport.authenticate('local', { failureRedirect: '/fail' }), function(request, response) {
+  response.redirect('/');
+});
+
+// 로그인 인증 세부코드 (세부사항 정의)
+// done(서버에러, 성공시사용자DB데이터, 에러메세지): 라이브러리 문법, 3개의 파라미터를 가진다.
+passport.use(new LocalStrategy({
+  usernameField: 'id', // 유저가 입력한 아이디 항목이 뭔지 정의(form의 name 속성)
+  passwordField: 'pw',
+  session: true, // 로그인 후 세션 저장 여부
+  passReqToCallback: false, // 아이디/비번 외의 다른 정보 검증 여부
+}, function (입력한아이디, 입력한비번, done) {
+  //console.log(입력한아이디, 입력한비번);
+  db.collection('login').findOne({ id: 입력한아이디 }, function (에러, 결과) {
+    if (에러) return done(에러)
+
+    if (!결과) return done(null, false, { message: '아이디가 존재하지 않습니다.' })
+    if (입력한비번 == 결과.pw) {
+      return done(null, 결과)
+    } else {
+      return done(null, false, { message: '비밀번호가 없거나 일치하지 않습니다.' })
+    }
+  })
+}));
+
+// session 데이터
+// serializeUser(): 세션을 저장시키는 코드(로그인 성공시 발동)
+// 세션 데이터를 생성하고 세션의 id 정보를 쿠키로 전송
+passport.serializeUser(function(user, done) {
+  done(null, user.id)
+});
+
+// deserializeUser(): 해당 세션 데이터를 가진 사람을 DB에서 해석(마이페이지 접속시 발동)
+passport.deserializeUser(function(아이디, done) {
+  done(null, {})
+});
