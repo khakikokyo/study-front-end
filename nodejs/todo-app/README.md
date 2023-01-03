@@ -60,6 +60,34 @@ Application Programming Interface
 
 서로 다른 프로그램간에 소통할 수 있게 도와주는 통신 규약을 뜻한다. 이걸 웹에서 사용하면 `서버와 고객간의 통신 규약`을 뜻하며, 조금 더 쉽게 풀어 말하면 `서버에게 요청해서 데이터 가져오는 방법`이 바로 API이다.
 
+## .env
+
+환경변수 관리
+
+1. 라이브러리 설치
+
+```bash
+$ npm i dotenv
+```
+
+2. 라이브러리 등록
+
+```javascript
+// server.js
+require('dotenv').config();
+```
+
+3. .env 파일 생성(server.js와 같은 경로)
+
+```javascript
+// .env (형식)
+PORT=8080
+DB_URL= "mongodb+srv://codingapple1@123"
+
+// 형식은 var 문법으로 왼쪽엔 변수명, 오른쪽은 값을 넣는다고 보면 된다.
+// 변수 이름은 보통 대문자로 표기한다.
+```
+
 ## GET 요청
 
 ```javascript

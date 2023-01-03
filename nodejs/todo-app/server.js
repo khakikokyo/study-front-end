@@ -122,8 +122,7 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/fail' }),
 
 // 마이페이지
 app.get('/mypage', 로그인했니, function(request, response) {
-  console.log(request.user)
-  response.render('mypage.ejs');
+  response.render('mypage.ejs', {사용자: request.user});
 });
 
 function 로그인했니(request, response, next) {
