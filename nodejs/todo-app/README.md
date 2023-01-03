@@ -421,3 +421,17 @@ app.put('/edit', function(request, response) {
 # 3개 라이브러리 설치 - 로그인, 로그인 검증, 세션 생성
 $ npm i passport passport-local express-session
 ```
+
+2. 설치한 라이브리러 사용
+
+```javascript
+// server.js
+// app.use(): 미들웨어, 요청과 응답 사이에 뭔가를 실행시키는 코드(요청이 적법한지 검사하는 그런 기능들을 미들웨이에 많이 담는다.)
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+app.use(session({secret: '비밀코드', resave: true, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
+```

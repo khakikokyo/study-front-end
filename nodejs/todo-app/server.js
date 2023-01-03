@@ -98,3 +98,13 @@ app.put('/edit', function(request, response) {
     response.redirect('/list');
   });
 });
+
+// 로그인 기능(session 방식) - 라이브러리
+// app.use(): 미들웨어, 요청과 응답 사이에 뭔가를 실행시키는 코드(요청이 적법한지 검사하는 그런 기능들을 미들웨이에 많이 담는다.)
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+app.use(session({secret: '비밀코드', resave: true, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
