@@ -172,8 +172,18 @@ passport.deserializeUser(function(아이디, done) {
 
 // 검색
 app.get('/search', (request, response) => {
-  console.log(request.query.value);
-  db.collection('post').find({제목:request.query.value}).toArray((error, result) => {
+  let 검색조건 = [
+    {
+      $search: {
+        index: "titleSearch", // Search index의 인덱스명
+        text: {
+          query: request.query.value,
+          path: "제목" // 제목, 날짜 둘 다 검색하고 싶으면 ["제목", "날짜"]
+        }
+      }
+    }
+  ];
+  db.collection('post').aggregate(검색조건).toArray((error, result) => {
     console.log(result);
     response.render('search.ejs', {posts: result});
   });

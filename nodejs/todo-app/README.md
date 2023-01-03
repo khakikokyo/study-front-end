@@ -555,7 +555,50 @@ Database 게시물 찾는 방법
 
 - Binary Search
 
-    MongoDB indexing 하기
-    
+1. MongoDB indexing 하기
+
     원하는 Collection 안에서 Indexes > CREATE INDEX > {"<제목>": "text"} <br/>
     { 인덱스만들항목이름: 'type' }: type에 글자인 경우 'text', 숫자인 경우 1 또는 -1 기입
+
+    - text index 문제점: 띄어쓰기 기준으로 단어를 저장 (영어가 아닌 언어들에서는 사용할 수 없는 기능)
+
+- 해결책
+
+  1. 검색할 문서의 양을 제한
+
+      - DB에 검색요청을 할 때 특정 날짜에서만 검색
+      - skip(), limit() 등의 함수를 사용하여 pagination 기능을 개발<br/>
+      ex) 맨 처음 검색할 땐 맨 앞에 20만 검색 > 그 다음엔 다음 20를 검색
+
+  2. text search 기능을 굳이 사용하고자 한다면
+
+      - MongoDB를 직접 설치하여 indexing 할 때 띄어쓰기 단위로 글자들을 indexing 하지말고 다른 알고리즘(nGram)을 사용하라고 셋팅
+
+  3. Search index 사용
+
+      - MongoDB Atlas에서만 제공하는 기능으로 클러스터에서 Search(or Search Indexes) 이동
+      - Create Search Index > Visual Editor > 중요#Index Name(titleSearch) / Collection 선택 > Index Analyzer(lucene.korean) / Search Analyzer(lucene.korean) 적용 > 안해도됨/참고#Field Mappings(Add Field(제목))
+
+```javascript
+// server.js
+// Search index에서 검색하는 방법
+app.get('/search', (request, response) => {
+  let 검색조건 = [
+    {
+      $search: {
+        index: "titleSearch", // Search index의 인덱스명
+        text: {
+          query: request.query.value,
+          path: "제목" // 제목, 날짜 둘 다 검색하고 싶으면 ["제목", "날짜"]
+        }
+      }
+    }
+  ];
+  // aggregate([{},{},{}]): 검색 조건 여러개 입력 가능
+  // ex) {}: 발행날짜(1~10일까지 찾기), 글쓰기라는 단어가 포함된 걸로, 정렬해서 찾기
+  db.collection('post').aggregate(검색조건).toArray((error, result) => {
+    console.log(result);
+    response.render('search.ejs', {posts: result});
+  });
+});
+```
