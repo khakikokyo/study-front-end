@@ -480,8 +480,13 @@ passport.serializeUser(function(user, done) {
 });
 
 // deserializeUser(): 해당 세션 데이터를 가진 사람을 DB에서 해석(마이페이지 접속시 발동)
+// 로그인한 유저의 개인정보를 DB에서 찾는 역할
+// 아이디 = sesseion 저장된 아이디(=id: test)
+// 마이페이지 request.user에 담김
 passport.deserializeUser(function(아이디, done) {
-  done(null, {})
+  db.collection('login').findOne({id: 아이디}, function(error, result) {
+    done(null, result)
+  });
 });
 ```
 
