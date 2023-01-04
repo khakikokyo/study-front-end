@@ -225,3 +225,8 @@ app.get('/upload', function(request, response) {
 app.post('/upload', upload.single('profile'), function(request, response) {
   response.send('업로드완료');
 });
+
+// 업로드한 이미지 보여주기
+app.get('/image/:imgname', function(request, response) {
+  response.sendFile(__dirname + '/public/image/' + request.params.imgname);
+});
