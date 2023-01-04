@@ -680,3 +680,15 @@ function 로그인했니(request, response, next) {
   }
 };
 ```
+
+## 이미지(파일) 업로드 & 이미지 서버 생성
+
+```javascript
+// upload.ejs
+// enctype="": 서버로 폼 데이터 전송하는 방식
+// enctype="application/x-www-form-urlencoded": defult, base64라는 인코딩 형식으로 인코딩되어 전달(용량이 1.3배 증가)
+// enctype="multipart/form-data": 인코딩하지 말고 그대로 파일 전송
+<form method="POST" action="/upload" enctype="multipart/form-data">
+  <input type="file" />
+</form>
+```

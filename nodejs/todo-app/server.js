@@ -202,3 +202,8 @@ app.get('/search', (request, response) => {
 // router 폴더와 파일을 생성하여 API 관리 예제
 app.use('/shop', require('./routes/shop.js'));
 app.use('/board/sub', require('./routes/board.js'));
+
+// 파일(이미지) 전송
+app.get('/upload', function(request, response) {
+  response.render('upload.ejs');
+});
