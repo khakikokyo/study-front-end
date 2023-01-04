@@ -198,3 +198,5 @@ app.get('/search', (request, response) => {
     response.render('search.ejs', {posts: result});
   });
 });
+
+app.use('/', require('./routes/shop.js'));

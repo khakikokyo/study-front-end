@@ -457,7 +457,7 @@ $ npm i passport passport-local express-session
 
 ```javascript
 // server.js
-// app.use(): 미들웨어, 요청과 응답 사이에 뭔가를 실행시키는 코드(요청이 적법한지 검사하는 그런 기능들을 미들웨이에 많이 담는다.)
+// app.use(): 미들웨어, 요청과 응답 사이에 실행되는 코드(요청이 적법한지 검사하는 그런 기능들을 미들웨이에 많이 담는다.)
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -619,4 +619,31 @@ app.post('/register', function(request, response) {
     response.redirect('/');
   });
 });
+```
+
+## router
+
+```javascript
+// routes > shop.js
+// require('파일경로') / require('라이브러리명') > ('') 파일 또는 라이브러리를 가져다 씀
+let router = require('express').Router();
+
+// router 폴더와 파일을 생성하여 API 관리 예제
+router.get('/shop/shirts', function(request, response) {
+  response.send('셔츠 판매 페이지 예제');
+});
+
+router.get('/shop/pants', function(request, response) {
+  response.send('바지 판매 페이지 예제');
+});
+
+// module.exports = 내보낼 변수명;
+module.exports = router;
+```
+
+```javascript
+// server.js
+// shop.js 파일을 server.js 사용
+// ./: 현재 경로
+app.use('/', require('./routes/shop.js'));
 ```
