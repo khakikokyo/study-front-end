@@ -647,3 +647,19 @@ module.exports = router;
 // ./: 현재 경로
 app.use('/', require('./routes/shop.js'));
 ```
+
+- shop.js '/shop' 생략
+
+```javascript
+// routes > shop.js
+router.get('/shirts', function(request, response) {
+  response.send('셔츠 판매 페이지 예제');
+});
+
+router.get('/pants', function(request, response) {
+  response.send('바지 판매 페이지 예제');
+});
+
+// server.js
+app.use('/shop', require('./routes/shop.js'));
+```

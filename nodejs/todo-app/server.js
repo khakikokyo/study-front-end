@@ -199,4 +199,4 @@ app.get('/search', (request, response) => {
   });
 });
 
-app.use('/', require('./routes/shop.js'));
+app.use('/shop', require('./routes/shop.js'));
