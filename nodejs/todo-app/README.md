@@ -703,6 +703,7 @@ $ npm i multer
 ```
 
 - multer 라이브러리 셋팅
+
 ```javascript
 // server.js
 let multer = require('multer');
@@ -716,6 +717,8 @@ let storage = multer.diskStorage({
   // filename: 파일의 이름을 결정하는 부분(file.originalname: 원본 그대로)
   filename: function(req, file, cb) {
     cb(null, file.originalname)
+    // cb(null, file.originalname + '날짜') // 파일명
+    // cb(null, file.originalname + new Date()) // 파일명
   }
 });
 
@@ -726,5 +729,26 @@ let upload = multer({storage: storage});
 // upload.array('input의 name 속성 이름', 받을최대갯수): 여러 개 파일 업로드 (upload.ejs input 수정도 필요)
 app.post('/upload', upload.single('profile'), function(request, response) {
   response.send('업로드완료');
+});
+```
+
+```javascript
+// server.js
+// 업로드한 파일의 확장자 필터로 원하는 파일만 거르는 방법
+let storage = multer.diskStorage({
+  destination: function(req, file, cb) {...},
+  filename: function(req, file, cb) {...},
+  fileFilter: function(req, file, callback) {
+    // path: nodejs 기본 내장 라이브러리 path라는걸 활용해 파일의 경로, 이름, 확장자 등을 알아낼 때 사용
+    let ext = path.extname(file.originalname);
+    if(ext !== '.png' && ext !== '.jpg' && ext !== 'jpeg') {
+      return callback(new Error('PNG, JPG만 업로드 하세요.))
+    }
+    callback(null, true)
+  },
+  // limits: 파일의 사이즈 제한을 걸고 싶을 때 사용
+  limits: {
+    fileSize: 1024 * 1024
+  }
 });
 ```
