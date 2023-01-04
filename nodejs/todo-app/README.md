@@ -689,6 +689,42 @@ function 로그인했니(request, response, next) {
 // enctype="application/x-www-form-urlencoded": defult, base64라는 인코딩 형식으로 인코딩되어 전달(용량이 1.3배 증가)
 // enctype="multipart/form-data": 인코딩하지 말고 그대로 파일 전송
 <form method="POST" action="/upload" enctype="multipart/form-data">
-  <input type="file" />
+  <input type="file" name="profile" />
 </form>
+```
+
+- 업로드한 이미지 저장<br/>
+보통 작업폴더 안에 저장한다. (DB에 저장해도 되나, 용량이 크고, 일반하드에 저장하는 편이 저렴하고 편하다.)
+
+- multipart/form-data를 통해 업로드된 파일을 매우 쉽게 저장, 이름변경, 처리할 수 있게 도와주는 라이브러리 설치
+
+```bash
+$ npm i multer
+```
+
+- multer 라이브러리 셋팅
+```javascript
+// server.js
+let multer = require('multer');
+
+// diskStorage: 업로드된 파일을 하드에 저장(memoryStorage라고 쓰면 하드 말고 램에 저장할 수도 있다.(휘발성))
+let storage = multer.diskStorage({
+  // destination: 업로드된 파일을 하드의 어떤 경로에 저장할지 정하는 부분
+  destination: function(req, file, cb) {
+    cb(null, './public/image')
+  },
+  // filename: 파일의 이름을 결정하는 부분(file.originalname: 원본 그대로)
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+
+let upload = multer({storage: storage});
+
+// 업로드한 이미지 폴더 안에 저장(public > image)
+// upload.single('input의 name 속성 이름'): 1개 파일 업로드
+// upload.array('input의 name 속성 이름', 받을최대갯수): 여러 개 파일 업로드 (upload.ejs input 수정도 필요)
+app.post('/upload', upload.single('profile'), function(request, response) {
+  response.send('업로드완료');
+});
 ```

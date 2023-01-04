@@ -203,7 +203,25 @@ app.get('/search', (request, response) => {
 app.use('/shop', require('./routes/shop.js'));
 app.use('/board/sub', require('./routes/board.js'));
 
+// multer 라이브러리 셋팅
+let multer = require('multer');
+let storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './public/image')
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+
+let upload = multer({storage: storage});
+
 // 파일(이미지) 전송
 app.get('/upload', function(request, response) {
   response.render('upload.ejs');
+});
+
+// 업로드한 이미지 폴더 안에 저장(public > image)
+app.post('/upload', upload.single('profile'), function(request, response) {
+  response.send('업로드완료');
 });

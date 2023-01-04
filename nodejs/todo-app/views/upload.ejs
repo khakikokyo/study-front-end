@@ -21,7 +21,8 @@
 
       <!-- enctype="": 서버로 폼 데이터 전송하는 방식 (multipart/form-data: 인코딩하지 말고 그대로 파일 전송) -->
       <form method="POST" action="/upload" enctype="multipart/form-data">
-        <input type="file" />
+        <input type="file" name="profile" />
+        <button type="submit">전송</button>
       </form>
     </div>
 
