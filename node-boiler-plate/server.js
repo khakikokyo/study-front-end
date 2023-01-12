@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB_URL, {})
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send('Hello World'));
+app.get('/', (req, res) => res.send('Hello World, Node.js'));
 
 app.post('/register', (req, res) => {
   // 회원가입시 필요한 정보를 client에서 가져와 데이터베이스로 넣기

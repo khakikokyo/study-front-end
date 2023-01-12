@@ -110,3 +110,22 @@ app.post('/register', (req, res) => {
 
 - PostMan으로 회원가입 하기<br/>
   Body > raw > JSON
+
+8. Nodemon 설치
+
+    소스를 변경할 때 그걸 감지해서 자동으로 서버를 재시작해 주는 tool
+
+```bash
+$ npm i nodemon
+```
+
+- 사용하기
+
+```javascript
+// (package.json)
+"scripts": {
+  "nodemon": "nodemon server.js",
+}
+
+$ npm run nodemon
+```
