@@ -126,6 +126,8 @@ $ npm i nodemon
 "scripts": {
   "nodemon": "nodemon server.js",
 }
+```
 
+```bash
 $ npm run nodemon
 ```
