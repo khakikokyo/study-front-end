@@ -84,3 +84,29 @@ mongoose.connect(process.env.DB_URL, {
 ```
 
 6. MongoDB Model & Schema
+7. 회원가입 기능
+
+```javascript
+// (server.js)
+const { User } = require("./models/User");
+
+// application/x-www-form-urlencoded > 분석해서 가져옴
+app.use(express.urlencoded({extended: true}));
+// application/json > 분석해서 가져옴
+app.use(express.json());
+
+app.post('/register', (req, res) => {
+  // 회원가입시 필요한 정보를 client에서 가져와 데이터베이스로 넣기
+  const user = new User(req.body)
+
+  user.save((err, userInfo) => {
+    if(err) return res.json({ success: false, err })
+    return res.status(200).json({
+      success: true
+    })
+  })
+});
+```
+
+- PostMan으로 회원가입 하기<br/>
+  Body > raw > JSON
