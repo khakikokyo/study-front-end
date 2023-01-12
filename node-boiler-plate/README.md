@@ -82,3 +82,5 @@ mongoose.connect(process.env.DB_URL, {
 }).then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 ```
+
+6. MongoDB Model & Schema
