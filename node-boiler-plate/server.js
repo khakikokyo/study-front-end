@@ -21,7 +21,7 @@ mongoose.connect(process.env.REACT_APP_MONGO_URL, {})
 
 app.get('/', (req, res) => res.send('Hello World!!'));
 
-app.post('/register', function(req, res) {
+app.post('/api/users/register', function(req, res) {
   // 회원가입시 필요한 정보를 client에서 가져와 데이터베이스로 넣기
   const user = new User(req.body)
 
@@ -77,6 +77,16 @@ app.get('/api/users/auth', auth, function(req, res) {
     lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image
+  });
+});
+
+// 로그아웃
+app.get('/api/users/logout', auth, function(req, res) {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, function(err, user) {
+    if(err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true
+    });
   });
 });
 

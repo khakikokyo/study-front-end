@@ -114,7 +114,7 @@ app.use(express.urlencoded({extended: true}));
 // application/json > 분석해서 가져옴
 app.use(express.json());
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   // 회원가입시 필요한 정보를 client에서 가져와 데이터베이스로 넣기
   const user = new User(req.body)
 
@@ -193,7 +193,7 @@ userSchema.pre('save', function(next) {
 
 ```javascript
 // (server.js)
-app.post('/login', function(req, res) {
+app.post('/api/users/login', function(req, res) {
   // 이메일을 데이터베이스에서 찾기
   User.findOne({ email: req.body.email }, (err, user) => {
     if(!user) {
@@ -333,4 +333,18 @@ let auth = function(req, res, next) {
 };
 
 module.exports = { auth };
+```
+
+12. 로그아웃
+
+```javascript
+// (server.js)
+app.get('/api/users/logout', auth, function(req, res) {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, function(err, user) {
+    if(err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true
+    });
+  });
+});
 ```
