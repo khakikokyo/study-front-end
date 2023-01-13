@@ -271,3 +271,66 @@ $ npm i cookie-parser
 const cookieParser = require('cookie-parser');
 app.cookieParser();
 ```
+
+11. Auth 기능
+
+    authentication: 입증, 증명, 인증 등의 의미<br/>
+    페이지마다 **로그인 여부**, **관리자 또는 일반유저**인지 확인, 글 등록, 수정, 삭제 시 **권한 체크**
+
+```javascript
+// (server.js)
+const { auth } = require('./middleware/auth');
+
+// role == 0 이면 일반유저, role !== 0 이면 관리자
+app.get('/api/users/auth', auth, function(req, res) {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  });
+});
+```
+
+```javascript
+// (models > User.js)
+userSchema.statics.findByToken = function(token, cb) {
+  let user = this;
+
+  // 토큰 decode
+  jwt.verify(token, 'secretToken', function(err, decoded) {
+    // 유저 아이디를 이융해서 유저를 찾고, 클라이언트에서 가져온 token과 DB에 보관된 토큰의 일치여부 확인
+    user.findOne({ "_id": decoded, "token": token }, function(err, user) {
+      if(err) return cb(err);
+      cb(null, user)
+    });
+  });
+};
+```
+
+```javascript
+// (middleware > auth.js)
+const { User } = require("../models/User");
+
+let auth = function(req, res, next) {
+  // 인증 처리
+  // 클라이언트 쿠키에서 토큰을 가져옴
+  let token = req.cookies.x_auth;
+
+  // 토큰을 복호화한 후 유저 찾기
+  User.findByToken(token, function(err, user) {
+    if(err) throw err;
+    if(!user) return res.json({ isAuth: false, error: ture });
+
+    req.token = token;
+    req.user = user;
+    next();
+  });
+};
+
+module.exports = { auth };
+```

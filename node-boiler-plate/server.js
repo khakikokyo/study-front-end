@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
+const { User } = require("./models/User");
+const { auth } = require('./middleware/auth');
 
 require('dotenv').config();
-
-const { User } = require("./models/User");
 
 // application/x-www-form-urlencoded > 분석해서 가져옴
 app.use(express.urlencoded({extended: true}));
@@ -34,7 +34,7 @@ app.post('/register', function(req, res) {
 });
 
 // 로그인 기능
-app.post('/login', function(req, res) {
+app.post('/api/users/login', function(req, res) {
   // 이메일을 데이터베이스에서 찾기
   User.findOne({ email: req.body.email }, (err, user) => {
     if(!user) {
@@ -63,6 +63,21 @@ app.post('/login', function(req, res) {
       })
     })
   })
+});
+
+// Auth 기능
+// role == 0 이면 일반유저, role !== 0 이면 관리자
+app.get('/api/users/auth', auth, function(req, res) {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  });
 });
 
 app.listen(process.env.REACT_APP_PORT, () => console.log(`Example app listening on port ${process.env.REACT_APP_PORT}!`));
