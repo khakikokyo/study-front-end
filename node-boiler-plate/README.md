@@ -51,8 +51,8 @@ require("dotenv").config();
 
 ```javascript
 // (.env)
-PORT=8080
-DB_URL="mongodb+srv://admin:<password>@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
+REACT_APP_PORT=8080
+REACT_APP_MONGO_URL="mongodb+srv://admin:<password>@cluster0.ksfxvce.mongodb.net/?retryWrites=true&w=majority"
 
 // 형식은 var 문법으로 왼쪽엔 변수명, 오른쪽은 값을 넣는다고 보면 된다.
 // 변수 이름은 보통 대문자로 표기한다.
@@ -61,6 +61,25 @@ DB_URL="mongodb+srv://admin:<password>@cluster0.ksfxvce.mongodb.net/?retryWrites
 // 사용 - process.env.변수이름
 process.env.PORT
 process.env.DB_URL
+```
+
+- cross-env 모듈
+
+    - 개발(development), 배포(production) 환경 구축
+    - cross-env 모듈은 프로젝트 참여자 각각이 MacOS, Windows, Linux 등 다양한 OS 마다 환경변수를 설정하는 방법이 다르기 때문에 이것에 대한 대책을 마련한 모듈이다.
+    - 그래서 corss-env 패키지를 사용하면 동적으로 process.env(환경변수)를 변경할 수 있으며 **모든 운영체제에서 동일한 방법으로 환경변수를 변경**할 수 있게 된다.
+    - cross-env 모듈을 사용하여 윈도우OS까지 OS간의 호환성 문제 해결
+
+```bash
+$ npm i cross-env
+```
+
+```javascript
+// (package.json)
+"scripts": {
+  "start": "cross-env NODE_ENV=production PORT=8080 node server.js", // 서비스 배포환경
+  "dev": "nodemon server.js", // 개발환경
+},
 ```
 
 5. mongodb 연결 (mongoose)
@@ -117,6 +136,9 @@ app.post('/register', (req, res) => {
 
 ```bash
 $ npm i nodemon
+
+# devDependencies 설치
+$ npm run nodemon --save-dev
 ```
 
 - 사용하기
@@ -124,11 +146,10 @@ $ npm i nodemon
 ```javascript
 // (package.json)
 "scripts": {
-  "nodemon": "nodemon server.js",
+  "dev": "nodemon server.js",
 }
 ```
 
 ```bash
-# devDependencies 설치
-$ npm run nodemon --save-dev
+$ npm run dev
 ```
