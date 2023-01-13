@@ -188,3 +188,86 @@ userSchema.pre('save', function(next) {
   }
 });
 ```
+
+10. 로그인 기능 & 토큰 생성
+
+```javascript
+// (server.js)
+app.post('/login', function(req, res) {
+  // 이메일을 데이터베이스에서 찾기
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if(!user) {
+      return res.json({
+        loginSuccess: false,
+        message: "이메일을 다시 확인해 주세요."
+      })
+    }
+
+    // 이메일 확인 후 비밀번호 일치여부 확인
+    user.comparePassword(req.body.password, function(err, isMatch) {
+      if(!isMatch)
+      return res.json({
+        loginSuccess: false,
+        message: "비밀번호를 다시 확인해 주세요."
+      })
+
+      // 비밀번호 일치 확인 후 토큰 생성
+      user.generateToken(function(err, user) {
+        if(err) return res.status(400).send(err);
+
+        // 토큰 저장 (Cookies, Local Storage, Session Storage) > Cookies에 저장
+        res.cookie("x_auth", user.token)
+          .status(200)
+          .json({ loginSuccess: true, userId: user._id })
+      })
+    })
+  })
+});
+```
+
+```javascript
+// (models > User.js)
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+  // 입력한 비밀번호와 DB에 암호화된 비밀번호 비교
+  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+    if(err) return cb(err)
+    cb(null, isMatch)
+  })
+}
+```
+
+- 토큰 생성을 위해 [JSONWEBTOKEN](https://www.npmjs.com/package/jsonwebtoken) 라이브리러 설치
+
+```bash
+$ npm i jsonwebtoken
+```
+
+```javascript
+// (models > User.js)
+const jwt = require('jsonwebtoken');
+
+userSchema.methods.generateToken = function(cb) {
+  let user = this;
+
+  // jsonwebtoken을 사용하여 token 생성
+  let token = jwt.sign(user._id.toHexString(), 'secretToken');
+
+  user.token = token;
+  user.save(function(err, user) {
+    if(err) return cb(err)
+    cb(null, user)
+  })
+}
+```
+
+- cookieParser
+
+```bash
+$ npm i cookie-parser
+```
+
+```javascript
+// (server.js)
+const cookieParser = require('cookie-parser');
+app.cookieParser();
+```
