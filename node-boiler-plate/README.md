@@ -348,3 +348,12 @@ app.get('/api/users/logout', auth, function(req, res) {
   });
 });
 ```
+
+## React JS
+
+- Real DOM: 만약 10개의 리스트가 있다고 가정했을 때, 그 중에 한가지의 리스트만 Update가 된다면 전체 10개의 리스트를 다시 Reload 해야한다. (Super Expensive한 작업)
+- Virtual DOM: 만약 10개의 리스트가 있다고 가정했을 때, 그 중에 한가지의 리스트만 Update가 된다면 그 바뀐 1개의 리스트만 DOM에서 바뀌게 된다.
+
+    1. JSX를 렌더링 한다. (그러면 Virtual DOM이 Update)
+    2. Virtual DOM이 이전 Virtual DOM에서 찍어둔 Snapshot과 비교해서 바뀐 부분을 찾는다. (이 과정을 **"diffing"**라고 부른다.)
+    3. 해당 바뀐 부분만 Real DOM에서 바꿔준다.
