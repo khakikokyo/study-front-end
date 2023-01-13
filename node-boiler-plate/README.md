@@ -129,5 +129,6 @@ $ npm i nodemon
 ```
 
 ```bash
-$ npm run nodemon
+# devDependencies 설치
+$ npm run nodemon --save-dev
 ```

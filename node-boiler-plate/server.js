@@ -13,7 +13,7 @@ app.use(express.json());
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 
-mongoose.connect(process.env.DB_URL, {})
+mongoose.connect(process.env.REACT_APP_MONGO_URL, {})
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
@@ -31,4 +31,4 @@ app.post('/register', (req, res) => {
   })
 });
 
-app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`));
+app.listen(process.env.REACT_APP_PORT, () => console.log(`Example app listening on port ${process.env.REACT_APP_PORT}!`));
