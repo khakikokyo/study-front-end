@@ -153,3 +153,36 @@ $ npm run nodemon --save-dev
 ```bash
 $ npm run dev
 ```
+
+9. 비밀번호 암호화
+
+Bcrypt를 이용하여 비밀번호 암호화 후 데이터베이스에 저장
+
+```javascript
+$ npm i bcrypt
+```
+
+```javascript
+// (models > User.js)
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+userSchema.pre('save', function(next) {
+  let user = this;
+
+  // password가 변환될 때만 bcrypt를 이용해 암호화
+  if(user.isModified('password')) {
+    // 비밀번호 암호화
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      if(err) return next(err);
+
+      // hash 암호화된 비밀번호
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        if(err) return next(err);
+        user.password = hash;
+        next();
+      });
+    });
+  };
+});
+```
