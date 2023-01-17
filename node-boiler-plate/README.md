@@ -16,7 +16,7 @@ $ npm init
 3. express 다운
 
 ```bash
-$ npm i express
+$ npm install express
 ```
 
 ```javascript
@@ -37,7 +37,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 - 라이브러리 설치
 
 ```bash
-$ npm i dotenv
+$ npm install dotenv
 ```
 
 - 라이브러리 등록
@@ -71,7 +71,7 @@ process.env.DB_URL
     - cross-env 모듈을 사용하여 윈도우OS까지 OS간의 호환성 문제 해결
 
 ```bash
-$ npm i cross-env
+$ npm install cross-env
 ```
 
 ```javascript
@@ -87,7 +87,7 @@ $ npm i cross-env
     Database > Connect > Connect your application > url 주소
 
 ```bash
-$ npm i mongoose
+$ npm install mongoose
 ```
 
 ```javascript
@@ -135,7 +135,7 @@ app.post('/api/users/register', (req, res) => {
     소스를 변경할 때 그걸 감지해서 자동으로 서버를 재시작해 주는 tool
 
 ```bash
-$ npm i nodemon
+$ npm install nodemon
 
 # devDependencies 설치
 $ npm run nodemon --save-dev
@@ -158,8 +158,8 @@ $ npm run dev
 
 Bcrypt를 이용하여 비밀번호 암호화 후 데이터베이스에 저장
 
-```javascript
-$ npm i bcrypt
+```bash
+$ npm install bcrypt
 ```
 
 ```javascript
@@ -239,7 +239,7 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 - 토큰 생성을 위해 [JSONWEBTOKEN](https://www.npmjs.com/package/jsonwebtoken) 라이브리러 설치
 
 ```bash
-$ npm i jsonwebtoken
+$ npm install jsonwebtoken
 ```
 
 ```javascript
@@ -263,7 +263,7 @@ userSchema.methods.generateToken = function(cb) {
 - cookieParser
 
 ```bash
-$ npm i cookie-parser
+$ npm install cookie-parser
 ```
 
 ```javascript
@@ -368,3 +368,52 @@ app.get('/api/users/logout', auth, function(req, res) {
     2. 모듈 단위로 개발이 가능하며, 가독성과 유지보수가 쉽다.
 
 - create-react-app을 사용하여 리액트를 설치하면 Babel이나 Webpack 설정이 이미 다 되어 있기 때문에 많은 시간이 걸리지 않고 리액트 앱을 시작할 수 있다.
+
+## React Router Dom
+
+```bash
+$ npm install react-router-dom
+```
+
+```javascript
+// (index.js)
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+```
+
+```javascript
+// (App.js)
+<div className="App">
+  <Routes>
+    <Route index element={<LandingPage />} />
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
+  </Routes>
+</div>
+```
+
+## AJAX
+
+- axios: 외부 라이브리러
+
+```bash
+$ npm install axios
+```
+
+```javascript
+// (server.js)
+app.get('/api/hello', function(req, res) {
+  res.send("안녕하세요.");
+});
+```
+
+```javascript
+// (components > views > LandingPage > LandingPage.js)
+useEffect(() => {
+  axios.get('http://localhost:8080/api/hello')
+    .then(response => console.log(response.data))
+}, []);
+```

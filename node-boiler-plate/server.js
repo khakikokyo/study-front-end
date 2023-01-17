@@ -19,7 +19,13 @@ mongoose.connect(process.env.REACT_APP_MONGO_URL, {})
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send('Hello World!!'));
+app.get('/', function(req, res) {
+  res.send('Hello World!!');
+});
+
+app.get('/api/hello', function(req, res) {
+  res.send("안녕하세요.");
+});
 
 app.post('/api/users/register', function(req, res) {
   // 회원가입시 필요한 정보를 client에서 가져와 데이터베이스로 넣기
